@@ -1,0 +1,348 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+:root {
+    --bg-dark: #0f172a;
+    --sidebar-bg: #1e293b;
+    --accent-blue: #38bdf8;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --card-bg: #1e293b;
+    --border-color: #334155;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    height: 100vh;
+    overflow: hidden; /* We want the dashboard to fill the screen */
+}
+
+/* Dashboard Grid Layout */
+.dashboard-container {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    height: 100vh;
+}
+
+/* Sidebar Styling */
+.sidebar {
+    background-color: var(--sidebar-bg);
+    border-right: 1px solid var(--border-color);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.logo h2 {
+    color: var(--accent-blue);
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+}
+
+.filters h3, .stats-overview h3 {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+}
+
+.filter-group {
+    margin-bottom: 1.5rem;
+}
+
+.filter-group label {
+    display: block;
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+}
+
+select, input[type="range"] {
+    width: 100%;
+    padding: 0.5rem;
+    background: var(--bg-dark);
+    border: 1px solid var(--border-color);
+    color: white;
+    border-radius: 4px;
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: var(--accent-blue);
+    border: none;
+    color: var(--bg-dark);
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: opacity 0.2s;
+}
+
+.btn-primary:hover {
+    opacity: 0.9;
+}
+
+/* Stat Cards */
+/* Horizontal Stats Row */
+.stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 equal columns */
+    gap: 1.5rem;
+}
+
+.stat-card {
+    background: var(--card-bg); /* Use card-bg to match the rest of the dashboard */
+    padding: 1.2rem;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: transform 0.2s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-3px); /* Subtle lift effect */
+    border-color: var(--accent-blue);
+}
+
+.stat-card p {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+}
+
+.stat-card span {
+    font-size: 1.5rem; /* Larger font for top-level stats */
+    font-weight: 700;
+    color: var(--accent-blue);
+}
+
+/* Main Content Area */
+.main-content {
+    display: grid;
+    grid-template-rows: 1fr 350px; /* Map takes top half, charts bottom */
+    padding: 1.5rem;
+    gap: 1.5rem;
+    overflow-y: auto;
+}
+
+.map-section {
+    position: relative; /* Essential for positioning overlays */
+    background: var(--card-bg);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+}
+
+/* Base style for all map overlays */
+.map-overlay {
+    position: absolute;
+    z-index: 1000; /* Sits above the Leaflet map */
+    background: rgba(30, 41, 59, 0.9); /* Semi-transparent sidebar-bg */
+    backdrop-filter: blur(4px);
+    border: 1px solid var(--border-color);
+    padding: 12px;
+    border-radius: 8px;
+    pointer-events: none; /* Allows clicking the map through the box */
+}
+
+/* Top-right Info Box */
+#map-info-box {
+    top: 20px;
+    right: 20px;
+    width: 200px;
+}
+
+#map-info-box h4 {
+    color: var(--accent-blue);
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+}
+
+#zone-info-content p {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+/* Bottom-right Legend */
+.map-legend {
+    bottom: 30px;
+    right: 20px;
+    width: 150px;
+}
+
+.map-legend h4 {
+    font-size: 0.75rem;
+    margin-bottom: 8px;
+    color: var(--text-main);
+}
+
+.legend-scale {
+    display: flex;
+    height: 10px;
+    width: 100%;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 5px;
+}
+
+.legend-scale span {
+    flex: 1;
+}
+
+.legend-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.65rem;
+    color: var(--text-muted);
+}
+
+/* Analytics Grid */
+.analytics-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.chart-container {
+    background: var(--card-bg);
+    padding: 1.2rem;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    height: 300px;
+}
+
+.chart-container h3 {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    color: var(--text-muted);
+}
+
+/* 1. Sidebar Scroll Logic */
+.sidebar {
+    background-color: var(--sidebar-bg);
+    border-right: 1px solid var(--border-color);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    
+    /* These three lines enable the independent scroll */
+    height: 100vh;
+    overflow-y: auto; 
+    scrollbar-width: thin; /* For Firefox */
+}
+
+/* Custom Scrollbar Styling (Chrome/Safari/Edge) */
+.sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+.sidebar::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 10px;
+}
+
+/* 2. Top Routes Table Styling */
+#top-routes-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+}
+
+#top-routes-table th {
+    text-align: left;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border-color);
+    padding: 0.75rem 0.5rem;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+}
+
+#top-routes-table td {
+    padding: 0.75rem 0.5rem;
+    border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+    color: var(--text-main);
+}
+
+#top-routes-table tr:hover {
+    background: rgba(56, 189, 248, 0.05); /* Subtle highlight on hover */
+}
+
+/* Make table container scrollable if list is long */
+.chart-container {
+    overflow-y: auto;
+}
+
+/* Specific styling for the Time Trends container ONLY */
+.time-trends-card .chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+/* Ensure the canvas is the only thing that scrolls if it overflows, 
+   not the whole container header */
+.time-trends-card .chart-wrapper {
+    position: relative;
+    height: 300px;
+    width: 100%;
+    overflow: hidden; 
+}
+
+/* Keep the buttons small and professional */
+.chart-toggle {
+    display: flex;
+    gap: 0;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.toggle-btn {
+    padding: 4px 10px;
+    font-size: 0.7rem;
+    background: var(--sidebar-bg);
+    color: var(--text-muted);
+    border: none;
+    cursor: pointer;
+}
+
+.toggle-btn.active {
+    background: var(--accent-blue);
+    color: var(--bg-dark);
+}
+
+/* Styling for the Economic Analysis Toggle */
+.economic-analysis-card .chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.toggle-btn-econ {
+    padding: 4px 10px;
+    font-size: 0.7rem;
+    background: var(--sidebar-bg);
+    color: var(--text-muted);
+    border: none;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.toggle-btn-econ.active {
+    background: var(--accent-blue);
+    color: var(--bg-dark);
+    font-weight: bold;
+}
