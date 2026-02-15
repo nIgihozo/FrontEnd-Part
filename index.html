@@ -1,1 +1,135 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NYC Urban Mobility Explorer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+   
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="logo">
+                <h2>NYC Taxi Explorer</h2>
+            </div>
+            
+            <section class="filters">
+                <h3>Filters</h3>
+                <div class="filter-group">
+                    <label for="borough-select">Borough</label>
+                    <select id="borough-select">
+                        <option value="all">All Boroughs</option>
+                        <option value="Manhattan">Manhattan</option>
+                        <option value="Brooklyn">Brooklyn</option>
+                        <option value="Queens">Queens</option>
+                        <option value="Bronx">Bronx</option>
+                        <option value="Staten Island">Staten Island</option>
+                    </select>
+                </div>
 
+                <div class="filter-group">
+                    <label for="time-range">Time of Day</label>
+                    <input type="range" id="time-range" min="0" max="23" value="12">
+                    <span id="time-display">12:00 PM</span>
+                </div>
+
+                <button id="apply-filters" class="btn-primary">Apply Insights</button>
+            </section>
+
+            <section class="stats-overview">
+                <h3>Quick Stats</h3>
+                <div class="stat-card">
+                    <p>Total Trips</p>
+                    <span id="total-trips">0</span>
+                </div>
+                <div class="stat-card">
+                    <p>Avg. Fare</p>
+                    <span id="avg-fare">$0.00</span>
+                </div>
+                <div class="stat-card">
+                    <p>Avg. Distance</p>
+                    <span id="avg-distance">0.0 mi</span>
+                </div>
+                <div class="stat-card">
+                    <p>Avg. Trip Duration</p>
+                    <span id="avg-trip duration">0 Hrs</span>
+                </div>
+            </section>
+        </aside>
+
+        <main class="main-content">
+
+    <section class="map-section">
+        <div id="map"></div> <div id="map-info-box" class="map-overlay">
+            <h4>Zone Details</h4>
+            <div id="zone-info-content">
+                <p>Hover over a zone to see statistics</p>
+            </div>
+        </div>
+
+        <div class="map-legend map-overlay">
+            <h4>Activity Level</h4>
+            <div class="legend-scale">
+                <span style="background: #bae6fd"></span>
+                <span style="background: #7dd3fc"></span>
+                <span style="background: #38bdf8"></span>
+                <span style="background: #0ea5e9"></span>
+                <span style="background: #082f49"></span>
+            </div>
+            <div class="legend-labels">
+                <span>Low</span>
+                <span>High</span>
+            </div>
+        </div>
+    </section>
+
+            <section class="analytics-grid">
+                <div class="chart-container">
+        <div class="chart-header">
+            <h3>Time Trends</h3>
+            <div class="chart-toggle">
+                <button class="toggle-btn active" data-view="hourly">Hourly</button>
+                <button class="toggle-btn" data-view="weekly">Weekly</button>
+            </div>
+        </div>
+        <div class="chart-wrapper">
+            <canvas id="timeTrendsChart"></canvas>
+        </div>
+    </div>
+                <div class="chart-container economic-analysis-card">
+    <div class="chart-header">
+        <h3>Economic Analysis</h3>
+        <div class="chart-toggle">
+            <button class="toggle-btn-econ active" data-view="borough">By Borough</button>
+            <button class="toggle-btn-econ" data-view="scatter">Fare vs Distance</button>
+        </div>
+    </div>
+    <div class="chart-wrapper">
+        <canvas id="economicChart"></canvas>
+    </div>
+</div>
+
+                
+                <div class="chart-container">
+    <h3>Top Travel Corridors</h3>
+    <table id="top-routes-table">
+        <thead>
+            <tr>
+                <th>Pickup Zone</th>
+                <th>Dropoff Zone</th>
+                <th>Trip Count</th>
+            </tr>
+        </thead>
+        <tbody id="routes-body">
+            </tbody>
+    </table>
+</div>
+            </section>
+        </main>
+    </div>
+
+    </div>
+
+    <script src="map.js"></script>
+</body>
+</html>
