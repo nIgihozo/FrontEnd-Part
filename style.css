@@ -105,6 +105,7 @@ select, input[type="range"] {
     flex-direction: column;
     justify-content: center;
     transition: transform 0.2s ease;
+    margin: 10px;
 }
 
 .stat-card:hover {
